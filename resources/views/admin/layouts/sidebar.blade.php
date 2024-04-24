@@ -1,114 +1,55 @@
 <!-- Sidebar Menu -->
 <nav class="mt-2">
-    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        @canany(['permission.show', 'roles.show', 'user.show'])
-            <li class="nav-item">
-                <a href="#" class="nav-link ">
-                    <i class="fa-solid fa-gears"></i>
-                    <p>
-                        Tuzilma
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview "  style="display: {{ Request::is('permission*') || Request::is('role*') || Request::is('user*') ? 'block' : 'none' }};">
+     <ul class="nav sidebar-toggle  nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview"
+            role="menu"
+            data-accordion="true">
+            @canany(['permission.show', 'roles.show', 'user.show'])
+                <li class="nav-item has-treeview ">
+                    <a href="#"
+                       class="nav-link {{ Request::is('permission*') || Request::is('role*') || Request::is('user*') ? 'active' : '' }}">
+                        <i class="fas fa-users-cog"></i>
+                        <p>
+                            Tuzilma
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview"
+                        style="display: {{ Request::is('permission*') || Request::is('role*') || Request::is('user*') ? 'block' : 'none' }};">
+                        @can('permission.show')
+                            <li class="nav-item">
+                                <a href="{{ route('permissions.index') }}"
+                                   class="nav-link {{ Request::is('permission*') ? 'active' : '' }}">
+                                    <i class="fas fa-key"></i>
+                                    <p>Ruxsatlar</p>
+                                </a>
+                            </li>
+                        @endcan
 
-                    <li class="nav-item">
-                        <a href="{{ route('permissions.index') }}" class="nav-link">
-                            <i class="fa-solid fa-key"></i>
-                            <p>
-                                Ruxsatlar
-                            </p>
-                        </a>
+                        @can('roles.show')
+                            <li class="nav-item">
+                                <a href="{{ route('roles.index') }}"
+                                   class="nav-link {{ Request::is('role*') ? 'active' : '' }}">
+                                    <i class="fas fa-user-lock"></i>
+                                    <p>Rollar</p>
+                                </a>
+                            </li>
+                        @endcan
 
-                    </li>
+                        @can('user.show')
+                            <li class="nav-item">
+                                <a href="{{ route('users.index') }}"
+                                   class="nav-link {{ Request::is('user*') ? 'active' : '' }}">
+                                    <i class="fas fa-user-friends"></i>
+                                    <p>Foydalanuvchilar</p>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
 
-                    <li class="nav-item">
-                        <a href="{{ route('roles.index') }}" class="nav-link ">
-                            <i class="fa-solid fa-users-gear"></i>
-                            <p>
-                                Rollar
-                            </p>
-                        </a>
-                    </li>
+                </li>
+            @endcanany
 
-                </ul>
-            </li>
 
-            <li class="nav-item">
-                <a href="#" class="nav-link ">
-                    <i class="nav-icon fas fa-home"></i>
-                    <p>
-                        Bosh sahifa
-                    </p>
-                </a>
-
-            </li>
-
-            <li class="nav-item">
-                <a href="{{ route('users.index') }}" class="nav-link ">
-                    <i class="fa fa-user"></i>
-                    <p>
-                        Foydalanuvchilar
-                    </p>
-                </a>
-            </li>
-
-        @endcanany
-            <li class="nav-item">
-                <a href="#" class="nav-link ">
-                    <i class="fa fa-folder"></i>
-
-                    <p>
-                        Bildirishnoma <span class="badge badge-info right">( 2 )</span>
-                    </p>
-                </a>
-
-            </li>
-
-            <li class="nav-item">
-                <a href="{{ route('category.index') }}" class="nav-link ">
-                    <i class="fa fa-list"></i>
-
-                    <p>
-                        Kategoriyalari
-                    </p>
-                </a>
-
-            </li>
-
-            <li class="nav-item">
-                <a href="{{ route('faculty.index') }}" class="nav-link ">
-                    <i class="fa fa-user"></i>
-                    <p>
-                        Fakultetlar
-                    </p>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a href="#" class="nav-link ">
-                    <i class="fa fa-thumbtack"></i>
-                    <p>
-                        Topshiriq
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('sendtask.create') }}" class="nav-link active">
-                            <i class="fa fa-paper-plane"></i>
-                            <p>Yuborish</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('sendtask.index') }}" class="nav-link ">
-                            <i class="fa fa-file-import"></i>
-                            <p>Yuborilganlar</p>
-                        </a>
-                    </li>
-
-                </ul>
-            </li>
 
 
     </ul>

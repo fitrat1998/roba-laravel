@@ -53,41 +53,6 @@
                                 @endif
                             </div>
 
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input type="text" name="email"
-                                       class="form-control {{ $errors->has('email') ? "is-invalid":"" }}"
-                                       value="{{ old('email',$user->email) }}" required>
-                                @if($errors->has('email'))
-                                    <span class="error invalid-feedback">{{ $errors->first('email') }}</span>
-                                @endif
-                            </div>
-
-                            <div class="form-group">
-                                <label>Fakultetlar</label>
-                                <select class="select2" multiple="multiple" name="faculty_id"
-                                        data-placeholder="Iltimos tanlang" style="width: 100%;">
-                                    @foreach($faculties as $faculty)
-                                        <option value="{{ $faculty->name }}" {{ ($user->faculty_id == $faculty->id ? "selected":'') }}>
-                                            {{ $faculty->name }}
-                                        </option>
-
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Rollar</label>
-                                <select class="select2" multiple="multiple" name="roles[]"
-                                        data-placeholder="Iltimos tanlang" style="width: 100%;">
-                                    @foreach($roles as $role)
-                                        <option
-                                            value="{{ $role->name }}" {{ ($user->hasRole($role->name) ? "selected":'') }}>{{ $role->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            {{--                            @canany(['roles.edit','user.edit'])--}}
-                            {{--                            @endcan--}}
                             <label>Parol</label>
                             <div class="form-group">
                                 <input type="password" name="password" id="password-field"

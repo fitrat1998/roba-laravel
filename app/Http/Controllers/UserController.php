@@ -33,10 +33,10 @@ class UserController extends Controller
 //        if (auth()->user()->hasRole('Super Admin'))
 //            $roles = Role::all();
 //        else
-        $faculties = Faculty::all();
+//        $faculties = Faculty::all();
         $roles = Role::where('name', '!=', 'Super Admin')->get();
 
-        return view('admin.users.add', compact('roles', 'faculties'));
+        return view('admin.users.add');
     }
 
     /**
@@ -52,17 +52,19 @@ class UserController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
+
         $user = User::create([
             'name' => $request->name,
             'login' => $request->login,
-            'email' => $request->email,
-            'faculty_id' => intval($request->faculty_id),
+            'email' => 'test@gmail.com',
+            'faculty_id' => 1,
             'password' => Hash::make($request->get('password')),
         ]);
-//            'role_id' => $request->role_id,
+
+        $userRole = 'user';
 
 
-        $user->assignRole($request->get('roles'));
+        $user->assignRole($userRole);
 
 
         return redirect()->route('users.index')->with('success', 'Foydalanuvchi muvaffaqiyatli qo`shildi');
@@ -95,7 +97,7 @@ class UserController extends Controller
 
         $roles = Role::where('name', '!=', 'Super Admin')->get();
 
-        return view('admin.users.edit', compact('user', 'roles', 'faculties'));
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
@@ -114,21 +116,25 @@ class UserController extends Controller
 
         $user = User::find($id);
 
-        if ($request->get('password') != null) {
-            $user->where('id', $id)
-                ->update([
-                    'name' => $request->input('name'),
-                    'login' => $request->input('login'),
-                    'password' => $request->filled('password') ? Hash::make($request->input('password')) : null,
-                    'faculty_id' => $request->input('faculty_id'),
-                    'updated_at' => now()
-                ]);
+        if ($request->filled('password')) {
+            $user->update([
+                'name' => $request->input('name'),
+                'login' => $request->input('login'),
+                'password' => Hash::make($request->input('password')),
+                'faculty_id' => 2,
+                'updated_at' => now()
+            ]);
+        } else {
+            $user->update([
+                'name' => $request->input('name'),
+                'login' => $request->input('login'),
+                'faculty_id' => 2,
+                'updated_at' => now()
+            ]);
         }
+//
+//        unset($request['password']);
 
-        unset($request['password']);
-
-        if (isset($request->roles)) $user->syncRoles($request->get('roles'));
-        unset($user->roles);
 
         return redirect()->route('users.index')->with('success', 'Foydalanuvchi muvaffaqiyatli tahrirlandi');
     }

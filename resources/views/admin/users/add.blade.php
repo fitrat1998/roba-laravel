@@ -53,35 +53,35 @@
                                 @endif
                             </div>
 
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input type="text" name="email"
-                                       class="form-control {{ $errors->has('email') ? "is-invalid":"" }}"
-                                       value="{{ old('email') }}" required>
-                                @if($errors->has('email'))
-                                    <span class="error invalid-feedback">{{ $errors->first('email') }}</span>
-                                @endif
-                            </div>
+{{--                            <div class="form-group">--}}
+{{--                                <label>Email</label>--}}
+{{--                                <input type="text" name="email"--}}
+{{--                                       class="form-control {{ $errors->has('email') ? "is-invalid":"" }}"--}}
+{{--                                       value="{{ old('email') }}" required>--}}
+{{--                                @if($errors->has('email'))--}}
+{{--                                    <span class="error invalid-feedback">{{ $errors->first('email') }}</span>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
 
-                            <div class="form-group">
-                                <label>Fakultetlar</label>
-                                <select class="select2" multiple="multiple" name="faculty_id"
-                                        data-placeholder="Iltimos tanlang" style="width: 100%;">
-                                    @foreach($faculties as $faculty)
-                                        <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+{{--                            <div class="form-group">--}}
+{{--                                <label>Fakultetlar</label>--}}
+{{--                                <select class="select2" multiple="multiple" name="faculty_id"--}}
+{{--                                        data-placeholder="Iltimos tanlang" style="width: 100%;">--}}
+{{--                                    @foreach($faculties as $faculty)--}}
+{{--                                        <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
 
-                            <div class="form-group">
-                                <label>Rollar</label>
-                                <select class="select2" multiple="multiple" name="roles[]"
-                                        data-placeholder="Iltimos tanlang" style="width: 100%;">
-                                    @foreach($roles as $role)
-                                        <option value="{{ $role->name }}">{{ $role->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+{{--                            <div class="form-group">--}}
+{{--                                <label>Rollar</label>--}}
+{{--                                <select class="select2" multiple="multiple" name="roles[]"--}}
+{{--                                        data-placeholder="Iltimos tanlang" style="width: 100%;">--}}
+{{--                                    @foreach($roles as $role)--}}
+{{--                                        <option value="{{ $role->name }}">{{ $role->name }}</option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
 
                             <div class="form-group">
                                 <label>Parol</label>

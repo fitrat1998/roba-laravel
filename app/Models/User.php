@@ -47,10 +47,10 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-     public function faculty($id)
-    {
-        $faculty = Faculty::find($id);
-
-        return $faculty->name;
-    }
+//     public function faculty($id)
+//    {
+//        $faculty = Faculty::find($id);
+//
+//        return $faculty->name;
+//    }
 }

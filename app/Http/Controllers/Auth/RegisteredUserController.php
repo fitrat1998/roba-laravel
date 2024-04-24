@@ -54,6 +54,10 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $userRole = 'user';
+
+        $user->assignRole($userRole);
+
         if ($cnt === 0) {
             $perms_cnt = Permission::count();
 
