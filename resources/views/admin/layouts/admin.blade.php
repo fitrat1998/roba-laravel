@@ -131,6 +131,10 @@
         .stepper-item:last-child::after {
             content: none;
         }
+
+        #card {
+            display: none;
+        }
     </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -320,6 +324,20 @@
             });
     });
 </script>
+
+ <script type="text/javascript">
+       function myFunction() {
+              var x = document.getElementById("card");
+              if (x.style.display === "block") {
+                  x.style.display = "none";
+                  console.log(1111);
+              }
+              else {
+                  x.style.display = "block";
+                  console.log(2222);
+              }
+           }
+    </script>
 
 </script>
 </body>

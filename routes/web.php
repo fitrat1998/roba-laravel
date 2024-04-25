@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\FacultyController;
 use App\Http\Controllers\admin\SendTaskController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ObjectsController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -21,8 +22,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('users', UserController::class);
     Route::resource('category', CategoryController::class);
     Route::resource('faculty', FacultyController::class);
-    Route::resource('sendtask', SendTaskController::class);
-    Route::get('downloadsend/{$name}', [SendTaskController::class,'download'])->name('sendtask.download');
+    Route::resource('objects',ObjectsController::class);
 
 });
 

@@ -29,7 +29,6 @@ class RegisteredUserController extends Controller
     }
 
 
-
     /**
      * Handle an incoming registration request.
      *
@@ -41,7 +40,7 @@ class RegisteredUserController extends Controller
 
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'login' => ['required', 'string',  'max:255', 'unique:' . User::class],
+            'login' => ['required', 'string', 'max:255', 'unique:' . User::class],
 //            'email' => ['required', 'string',  'max:255','email', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
@@ -54,9 +53,14 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $userRole = 'user';
-
-        $user->assignRole($userRole);
+        if ($cnt > 0) {
+                Role::create([
+                    'name' => 'user',
+                    'title' => 'Korigar',
+                    'guard_name' => 'web'
+                ]);
+            $user->assignRole('user');
+        }
 
         if ($cnt === 0) {
             $perms_cnt = Permission::count();
