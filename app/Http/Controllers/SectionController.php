@@ -13,7 +13,8 @@ class SectionController extends Controller
      */
     public function index()
     {
-        //
+        $sections = Section::all();
+        return view('admin.sections.index', compact('sections'));
     }
 
     /**
@@ -21,7 +22,8 @@ class SectionController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.sections.add');
+
     }
 
     /**
@@ -29,7 +31,14 @@ class SectionController extends Controller
      */
     public function store(StoreSectionRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $section = Section::create([
+            'name' => $validated['name'],
+            'parent' => $validated['parent'],
+        ]);
+
+        return redirect()->route('sections.index')->with('success', 'Qism muvvafaqiyatli qo`shildi');
     }
 
     /**
@@ -43,24 +52,39 @@ class SectionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Section $section)
+    public function edit($id)
     {
-        //
+
+        $section = Section::find($id);
+
+        return view('admin.sections.edit', compact('section'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSectionRequest $request, Section $section)
+    public function update(UpdateSectionRequest $request, $id)
     {
-        //
+        $validated = $request->validated();
+
+        $section = Section::find($id);
+
+        $section->update([
+            'name' => $validated['name'],
+            'parent' => $validated['parent'],
+        ]);
+
+        return redirect()->route('sections.index')->with('success', 'Qism muvvafaqiyatli tahrirlandi');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Section $section)
+    public function destroy($id)
     {
-        //
+        $section = Section::find($id)->delete();
+        return redirect()->route('sections.index')->with('success', 'Qism muvvafaqiyatli o`chirildi');
+
     }
 }

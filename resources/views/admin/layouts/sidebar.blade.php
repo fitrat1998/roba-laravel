@@ -57,6 +57,22 @@
             </a>
         </li>
 
+        <li class="nav-item">
+            <a href="{{ route('sections.index') }}"
+               class="nav-link {{ Request::is('sections*') ? 'active' : '' }}">
+                <i class="fa-solid fa-bath"></i>
+                <p>Qo'shimcha qismlar</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{ route('workers.index') }}"
+               class="nav-link {{ Request::is('workers*') ? 'active' : '' }}">
+                <i class="fa-solid fa-bath"></i>
+                <p>Ishchilar</p>
+            </a>
+        </li>
+
 
     </ul>
 </nav>

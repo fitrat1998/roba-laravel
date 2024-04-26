@@ -63,11 +63,7 @@
             flex: 1;
 
         @media (max-width: 768px) {
-            font-size:
-
-        12px
-
-        ;
+            font-size:  12px  ;
         }
 
         }
@@ -133,7 +129,7 @@
         }
 
         #card {
-            display: none;
+            display: block;
         }
     </style>
 </head>
@@ -313,7 +309,7 @@
 @endif
 
 <script>
-    document.addEventListener("DOMContentLoaded", function(event) {
+    document.addEventListener("DOMContentLoaded", function (event) {
         ClassicEditor
             .create(document.querySelector('#editor'))
             .then(editor => {
@@ -325,19 +321,18 @@
     });
 </script>
 
- <script type="text/javascript">
-       function myFunction() {
-              var x = document.getElementById("card");
-              if (x.style.display === "block") {
-                  x.style.display = "none";
-                  console.log(1111);
-              }
-              else {
-                  x.style.display = "block";
-                  console.log(2222);
-              }
-           }
-    </script>
+<script type="text/javascript">
+    function myFunction() {
+        var x = document.getElementById("card");
+        if (x.style.display === "block") {
+            x.style.display = "none";
+            console.log(1111);
+        } else {
+            x.style.display = "block";
+            console.log(2222);
+        }
+    }
+</script>
 
 </script>
 </body>

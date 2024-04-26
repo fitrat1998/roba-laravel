@@ -43,28 +43,71 @@
 
                                                 <div class="col-lg-3">
                                                     <i class="fa fa-building"></i>
-                                                    <label>Object name</label>
+                                                    <label>Obyekt nomi</label>
                                                     <input type="text" name="object_name" class="form-control"
-                                                           placeholder="Name of object" required
+                                                           placeholder="obyekt nomi" required
                                                            style="background-color: #F8F8F8 !important;">
                                                 </div>
 
-                                                <div class="">
+                                                <div class="col-lg-5">
                                                     <i class="fa fa-parking"></i>
-                                                    <label>Extra section of object</label><br>
+                                                    <label>Obyektning qo'shimcha qismlari</label><br>
                                                     <select name="ob_sec[]"
-                                                            class="js-example-basic-multiple form-control"
+                                                            class=" select2"
                                                             multiple="multiple"
-                                                            style="background-color: #F8F8F8 !important;width:750px !important; ">
-
+                                                            style="background-color: #F8F8F8 !important;width:700px !important; ">
+                                                        <option value="">1</option>
+                                                        <option value="">2</option>
+                                                        <option value="">3</option>
                                                     </select>
                                                 </div>
 
+                                                <div class="col-lg-3 ml-5">
+                                                    <i class="fa fa-arrow-up-1-9"></i>
+                                                    <label>Qavatlar</label><br>
+                                                     <input type="text" name="floors" class="form-control" placeholder="qavatlar soni 1/4" required style="background-color: #F8F8F8 !important;">
+                                                </div>
+
+                                                <div class="row mb-3">
+
+                                                    <div class="col-lg-2">
+                                                        <i class="fa fa-house"></i>
+                                                        <label>Kvartiralar</label>
+                                                        <input type="text" name="rooms" class="form-control"
+                                                               placeholder="qavatlar soni 1/10" required
+                                                               style="background-color: #F8F8F8 !important;">
+                                                    </div>
+
+                                                    <div class="col-lg-5">
+                                                        <i class="fa fa-stairs"></i>
+                                                        <label>Qavatlarning qo'shimcha qismlari</label><br>
+                                                        <select name="floor_sec[]"
+                                                                class="js-example-basic-multiple form-control select2"
+                                                                multiple="multiple"
+                                                                style="background-color: #F8F8F8 !important;width:650px !important; ">
+
+                                                        </select>
+                                                    </div>
+
+
+                                                    <div class="col-lg-5">
+                                                        <i class="fa fa-parking"></i>
+                                                        <label>Kvartiralarning qo'shimcha qismlari</label><br>
+                                                        <select name="flat_sec[]"
+                                                                class="js-example-basic-multiple form-control select2"
+                                                                multiple="multiple"
+                                                                style="background-color: #F8F8F8 !important;width:650px !important; ">
+
+                                                        </select>
+                                                    </div>
+
+
+                                                </div>
 
                                             </div>
 
                                             <button type="submit" class="btn btn-success float-justify ">
-                                                Submit
+                                                Kiritish
                                             </button>
                                         </form>
                                     </div>

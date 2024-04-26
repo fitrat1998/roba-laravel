@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ObjectSection;
 use App\Http\Requests\StoreObjectSectionRequest;
 use App\Http\Requests\UpdateObjectSectionRequest;
+use App\Models\Section;
 
 class ObjectSectionController extends Controller
 {
@@ -13,7 +14,8 @@ class ObjectSectionController extends Controller
      */
     public function index()
     {
-        //
+        $sections = Section::all();
+        return view('admin.sections.index', compact('sections'));
     }
 
     /**
@@ -21,7 +23,8 @@ class ObjectSectionController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.objectsections.add');
+
     }
 
     /**
@@ -29,7 +32,14 @@ class ObjectSectionController extends Controller
      */
     public function store(StoreObjectSectionRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $section = ObjectSection::create([
+            'name' => $validated['name'],
+            'parent' => $validated['parent'],
+        ]);
+
+        return redirect()->route('sections.index')->with('success','Qism muvvafaqiyatli qo`shildi');
     }
 
     /**
