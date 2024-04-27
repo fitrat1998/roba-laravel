@@ -13,10 +13,12 @@ return new class extends Migration {
         Schema::create('flats', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('object_id')->unsigned();
-            $table->string('number');
+            $table->bigInteger('floor_id')->unsigned();
+            $table->string('number')->nullable();
             $table->string('surface');
             $table->timestamps();
-            $table->foreign('object_id')->references('id')->on('flats')->onDelete('cascade');
+            $table->foreign('object_id')->references('id')->on('objects')->onDelete('cascade');
+            $table->foreign('floor_id')->references('id')->on('floors')->onDelete('cascade');
         });
     }
 

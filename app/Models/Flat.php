@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Flat extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'object_id',
+        'number',
+        'surface'
+    ];
 }

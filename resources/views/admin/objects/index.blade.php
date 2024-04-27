@@ -38,7 +38,8 @@
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <form method="POST" id="object">
+                                        <form action="{{ route('objects.store')  }}" method="POST" id="object">
+                                            @csrf
                                             <div class="row mb-3">
 
                                                 <div class="col-lg-3">
@@ -56,21 +57,27 @@
                                                             class=" select2"
                                                             multiple="multiple"
                                                             style="background-color: #F8F8F8 !important;width:700px !important; ">
-                                                        <option value="">1</option>
-                                                        <option value="">2</option>
-                                                        <option value="">3</option>
+                                                        @foreach($sections as $section)
+                                                            @if($section['parent'] == "object")
+                                                                <option
+                                                                    value=" {{$section->id}} ">{{$section->name}}</option>
+                                                            @endif
+                                                        @endforeach
                                                     </select>
                                                 </div>
 
                                                 <div class="col-lg-3 ml-5">
                                                     <i class="fa fa-arrow-up-1-9"></i>
                                                     <label>Qavatlar</label><br>
-                                                     <input type="text" name="floors" class="form-control" placeholder="qavatlar soni 1/4" required style="background-color: #F8F8F8 !important;">
+                                                    <input type="text" name="floors" class="form-control"
+                                                           placeholder="qavatlar soni 1/4" required
+                                                           style="background-color: #F8F8F8 !important;">
+
                                                 </div>
 
                                                 <div class="row mb-3">
 
-                                                    <div class="col-lg-2">
+                                                    <div class="col-lg-2 mt-3">
                                                         <i class="fa fa-house"></i>
                                                         <label>Kvartiralar</label>
                                                         <input type="text" name="rooms" class="form-control"
@@ -78,25 +85,37 @@
                                                                style="background-color: #F8F8F8 !important;">
                                                     </div>
 
-                                                    <div class="col-lg-5">
+                                                    <div class="col-lg-5 mt-3">
                                                         <i class="fa fa-stairs"></i>
                                                         <label>Qavatlarning qo'shimcha qismlari</label><br>
                                                         <select name="floor_sec[]"
                                                                 class="js-example-basic-multiple form-control select2"
                                                                 multiple="multiple"
                                                                 style="background-color: #F8F8F8 !important;width:650px !important; ">
+                                                            @foreach($sections as $section)
+                                                                @if($section['parent'] == "floor")
+                                                                    <option
+                                                                        value=" {{$section->id}} ">{{$section->name}}</option>
+                                                                @endif
+                                                            @endforeach
 
                                                         </select>
                                                     </div>
 
 
-                                                    <div class="col-lg-5">
+                                                    <div class="col-lg-5 mt-3">
                                                         <i class="fa fa-parking"></i>
                                                         <label>Kvartiralarning qo'shimcha qismlari</label><br>
                                                         <select name="flat_sec[]"
                                                                 class="js-example-basic-multiple form-control select2"
                                                                 multiple="multiple"
                                                                 style="background-color: #F8F8F8 !important;width:650px !important; ">
+                                                            @foreach($sections as $section)
+                                                                @if($section['parent'] == "flat")
+                                                                    <option
+                                                                        value=" {{$section->id}} ">{{$section->name}}</option>
+                                                                @endif
+                                                            @endforeach
 
                                                         </select>
                                                     </div>
@@ -127,9 +146,9 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nomi</th>
-                                <th>Qavatlar soni</th>
-                                <th>Xonalar soni</th>
-                                <th>Qo'shimcha qismlar</th>
+{{--                                <th>Qavatlar soni</th>--}}
+{{--                                <th>Xonalar soni</th>--}}
+{{--                                <th>Qo'shimcha qismlar</th>--}}
                                 <th class="w-25">Amallar</th>
                             </tr>
                             </thead>
@@ -138,12 +157,8 @@
                                 <tr>
                                     <td>{{ $object->id }}</td>
                                     <td>{{ $object->name }}</td>
-                                    <td>{{ $object->login }}</td>
-                                    <td>
-                                        @foreach($object->getAllPermissions()->pluck('name') as $permission)
-                                            <span class="badge badge-secondary">{{ $permission }} </span>
-                                        @endforeach
-                                    </td>
+
+
                                     <td class="text-center">
                                         @can('object.delete')
                                             <form action="{{ route('objects.destroy',$object->id) }}" method="post">
