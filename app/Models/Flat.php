@@ -11,6 +11,7 @@ class Flat extends Model
 
     protected $fillable = [
         'object_id',
+        'floor_id',
         'number',
         'surface'
     ];

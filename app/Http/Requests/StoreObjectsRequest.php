@@ -6,6 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreObjectsRequest extends FormRequest
 {
+    private mixed $rooms;
+
     /**
      * Determine if the user is authorized to make this request.
      */

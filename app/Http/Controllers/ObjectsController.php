@@ -9,6 +9,7 @@ use App\Http\Requests\StoreObjectsRequest;
 use App\Http\Requests\UpdateObjectsRequest;
 use App\Models\ObjectSection;
 use App\Models\Section;
+use Illuminate\Support\Facades\DB;
 
 class ObjectsController extends Controller
 {
@@ -38,50 +39,90 @@ class ObjectsController extends Controller
     public function store(StoreObjectsRequest $request)
     {
         $validated = $request->validated();
-
         $existsobjects = Objects::where('name', $validated['object_name'])->first();
 
+//        dd($request);
         if (empty($existsobjects)) {
             $objects = Objects::create([
                 'name' => $validated['object_name']
             ]);
+            foreach ($request->ob_sec as $k => $ob) {
+                $sec_ob = DB::table('object_has_section')
+                    ->where('objects_id', $objects->id)
+                    ->where('sections_id', $ob)
+                    ->first();
+                if (!$sec_ob) {
+                    DB::table('object_has_section')->insert([
+                        'objects_id' => $objects->id,
+                        'sections_id' => $ob
+                    ]);
+                }
+            }
         }
-//        else {
-//           return redirect()->back()->with('danger','Bu obyekt allaqachon mavjud');
-//        }
+        $parsedfloors = explode('/', $request->get('floors'));
+        $parsedflats = explode('/', $request->get('rooms'));
 
-        $parsedfloors = explode('/', $request->floors);
+        $floors_end = $parsedfloors[1] ?? 0;
+        $floors_start = $parsedfloors[0] ?? 0;
 
-        for ($i = $parsedfloors[0]; $i <= $parsedfloors[1]; $i++) {
-            $existsfloors = Floor::where('object_id', $existsobjects->id)
-                ->where('number', $i)
-                ->first();
+        $floors_s = $floors_end - $floors_start + 1;
 
-            if (empty($existsfloors) && empty($existsobjects)) {
-                $floors = Floor::create([
-                    'object_id' => $existsobjects->id,
+        $floors_room = ($parsedflats[1] ?? 0) / $floors_s;
+
+        for ($i = $floors_start; $i <= $floors_end; $i++) {
+            if(($existsobjects)){
+                $floor = Floor::where('object_id', $existsobjects->id)
+                    ->where('number', $i)
+                    ->first();
+            }
+            $floor = [];
+            if (!$floor) {
+                $floor = Floor::create([
+                    'object_id' => $existsobjects->id ?? $objects->id,
                     'number' => $i,
                     'surface' => 0,
                 ]);
-            }
-            else {
-                return redirect()->back()->with('danger', 'Bu qavatlar allaqachon mavjud');
-            }
 
+                foreach ($request->floor_sec as $k => $ob) {
+                    $sec_floor = DB::table('floor_has_section')
+                        ->where('floors_id', $floor->id)
+                        ->where('sections_id', $ob)
+                        ->first();
+                    if (!$sec_floor) {
+                        DB::table('floor_has_section')->insert([
+                            'floors_id' => $floor->id,
+                            'sections_id' => $ob
+                        ]);
+                    }
+                }
+
+                for ($j = ($i - 1) * $floors_room; $j < abs($i) * $floors_room; $j++) {
+                    $flat = Flat::create([
+                        'object_id' => $objects->id ?? $existsobjects->id,
+                        'floor_id' => $floor->id,
+                        'number' => $j + 1,
+                        'surface' => $i
+                    ]);
+
+                    foreach ($request->flat_sec as $k => $ob) {
+                        $sec_flat = DB::table('flat_has_section')
+                            ->where('flats_id', $flat ->id)
+                            ->where('sections_id', $ob)
+                            ->first();
+                        if (!$sec_flat) {
+                            DB::table('flat_has_section')->insert([
+                                'flats_id' => $flat->id,
+                                'sections_id' => $ob
+                            ]);
+                        }
+                    }
+                }
+            } else {
+                return redirect()->back()->with('danger', 'Malumotlar allaqachon mavjud');
+            }
         }
 
-        $parsedflats = explode('/', $request->rooms);
-
-//        for ($j = $parsedflats[0]; $j <= $parsedflats[1]; $j++) {
-//
-//            $flats= Flat::create([
-//                'object_id' => $object->id,
-//                'number' => $j,
-//
-//            ]);
-//        }
-        exit();
-//        return redirect()->route('objects.index')->with('success','Obyekt muvaffaqiyatli qo`shildi');
+        return redirect()->route('objects.index')->with('success', 'Obyekt muvaffaqiyatli qo`shildi');
 
     }
 

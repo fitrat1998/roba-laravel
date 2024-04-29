@@ -12,12 +12,12 @@ return new class extends Migration {
     {
         Schema::create('floor_has_section', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('flats_id');
+            $table->unsignedBigInteger('floors_id');
             $table->unsignedBigInteger('sections_id');
             $table->timestamps();
 
-            $table->foreign('flats_id')
-                ->references('id')->on('flats')
+            $table->foreign('floors_id')
+                ->references('id')->on('floors')
                 ->onDelete('cascade');
 
             $table->foreign('sections_id')
