@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Foydalanuvchi</h1>
+                    <h1>Ishchilar</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('index') }}">Bosh sahifa</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('users.index') }}">Foydalanuvchilar</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('users.index') }}">Ishchilar</a></li>
                         <li class="breadcrumb-item active">Qo'shish</li>
                     </ol>
                 </div>
@@ -31,15 +31,25 @@
                     <!-- /.card-header -->
                     <div class="card-body">
 
-                        <form action="{{ route('users.store') }}" method="post">
+                        <form action="{{ route('workers.store') }}" method="post">
                             @csrf
                             <div class="form-group">
-                                <label>Fish</label>
+                                <label>Ism Familiya <span class="text-danger">*</span></label>
                                 <input type="text" name="name"
                                        class="form-control {{ $errors->has('name') ? "is-invalid":"" }}"
                                        value="{{ old('name') }}" required>
                                 @if($errors->has('name'))
                                     <span class="error invalid-feedback">{{ $errors->first('name') }}</span>
+                                @endif
+                            </div>
+
+                            <div class="form-group">
+                                <label>Telefon raqami </label>
+                                <input type="text" name="phone"
+                                       class="form-control {{ $errors->has('phone') ? "is-invalid":"" }}"
+                                       value="{{ old('phone') }}" required>
+                                @if($errors->has('phone'))
+                                    <span class="error invalid-feedback">{{ $errors->first('phone') }}</span>
                                 @endif
                             </div>
 
@@ -56,7 +66,7 @@
                             <div class="form-group">
                                 <label>Parol</label>
                                 <input type="password" name="password" id="password-field"
-                                       class="form-control {{ $errors->has('password') ? "is-invalid":"" }}" required>
+                                       class="form-control {{ $errors->has('password') ? "is-invalid":"" }}" >
                                 <span toggle="#password-field"
                                       class="fa fa-fw fa-eye toggle-password field-icon"></span>
                                 @if($errors->has('password'))
@@ -66,7 +76,7 @@
                             <div class="form-group">
                                 <label>Parolni tasdiqlash</label>
                                 <input id="password-confirm" type="password" class="form-control"
-                                       name="password_confirmation" required autocomplete="new-password">
+                                       name="password_confirmation"  autocomplete="new-password">
                                 <span toggle="#password-confirm"
                                       class="fa fa-fw fa-eye toggle-password field-icon"></span>
                                 @if($errors->has('password_confirmation'))
@@ -76,9 +86,25 @@
                                 <div id="message"></div>
                             </div>
 
-                            <div class="form-group">
+{{--                            <div class="form-group">--}}
+{{--                                <label>Obyekt</label>--}}
+{{--                                <select name="parent" id="parent" class="form-control select2">--}}
+{{--                                    <option value="">tanlang</option>--}}
+{{--                                    <option value="object">Obyekt</option>--}}
+{{--                                    <option value="floor">Qavat</option>--}}
+{{--                                    <option value="flat">Xona</option>--}}
+{{--                                </select>--}}
+{{--                                @if($errors->has('login'))--}}
+{{--                                    <span class="error invalid-feedback">{{ $errors->first('login') }}</span>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
+
+                                <div id="message"></div>
+                            </div>
+
+                            <div class="form-group m-1">
                                 <button type="submit" class="btn btn-success float-right">Saqlash</button>
-                                <a href="{{ route('users.index') }}" class="btn btn-danger float-left">Bekor qilish</a>
+                                <a href="{{ route('workers.index') }}" class="btn btn-danger float-left">Bekor qilish</a>
                             </div>
                         </form>
 

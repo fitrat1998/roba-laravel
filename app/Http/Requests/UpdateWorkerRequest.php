@@ -22,7 +22,10 @@ class UpdateWorkerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required',
+            'phone' => 'required|min:11',
+            'login',
+            'password'
         ];
     }
 }
