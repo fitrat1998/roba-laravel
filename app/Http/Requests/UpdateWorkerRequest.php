@@ -11,7 +11,7 @@ class UpdateWorkerRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,8 +24,6 @@ class UpdateWorkerRequest extends FormRequest
         return [
             'name' => 'required',
             'phone' => 'required|min:11',
-            'login',
-            'password'
         ];
     }
 }

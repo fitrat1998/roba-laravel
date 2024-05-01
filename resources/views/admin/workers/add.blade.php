@@ -86,22 +86,6 @@
                                 <div id="message"></div>
                             </div>
 
-{{--                            <div class="form-group">--}}
-{{--                                <label>Obyekt</label>--}}
-{{--                                <select name="parent" id="parent" class="form-control select2">--}}
-{{--                                    <option value="">tanlang</option>--}}
-{{--                                    <option value="object">Obyekt</option>--}}
-{{--                                    <option value="floor">Qavat</option>--}}
-{{--                                    <option value="flat">Xona</option>--}}
-{{--                                </select>--}}
-{{--                                @if($errors->has('login'))--}}
-{{--                                    <span class="error invalid-feedback">{{ $errors->first('login') }}</span>--}}
-{{--                                @endif--}}
-{{--                            </div>--}}
-
-                                <div id="message"></div>
-                            </div>
-
                             <div class="form-group m-1">
                                 <button type="submit" class="btn btn-success float-right">Saqlash</button>
                                 <a href="{{ route('workers.index') }}" class="btn btn-danger float-left">Bekor qilish</a>

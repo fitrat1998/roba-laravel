@@ -31,44 +31,67 @@
                     <!-- /.card-header -->
                     <div class="card-body">
 
-                        <form action="{{ route('sections.update',$section->id) }}" method="post">
+                        <form action="{{ route('workers.update',$worker->id) }}" method="post">
                             @csrf
                             @method('PUT')
                             <div class="form-group">
                                 <label>Nomi</label>
                                 <input type="text" name="name"
                                        class="form-control {{ $errors->has('name') ? "is-invalid":"" }}"
-                                       value="{{ old('name',$section->name) }}" required>
+                                       value="{{ old('name',$worker->fullname) }}" required>
                                 @if($errors->has('name'))
                                     <span class="error invalid-feedback">{{ $errors->first('name') }}</span>
                                 @endif
                             </div>
-                            <div class="form-group">
-                                <label>Obyekt</label>
-                                <select name="parent" id="parent" class="form-control select2">
-                                    <option
-                                        value="object" {{ old('parent',$section->parent) == 'object' ? 'selected' : '' }}>
-                                        Obyekt
-                                    </option>
-                                    <option
-                                        value="flat" {{ old('parent',$section->parent) == 'flat' ? 'selected' : '' }}>
-                                       Xona
-                                    </option>
-                                    <option
-                                        value="floor" {{ old('parent',$section->parent) == 'floor' ? 'selected' : '' }}>
-                                        Qavat
-                                    </option>
-                                </select>
 
+                            <div class="form-group">
+                                <label>Telefon raqami</label>
+                                <input type="text" name="phone"
+                                       class="form-control {{ $errors->has('name') ? "is-invalid":"" }}"
+                                       value="{{ old('name',$worker->phone) }}" required>
+                                @if($errors->has('phone'))
+                                    <span class="error invalid-feedback">{{ $errors->first('phone') }}</span>
+                                @endif
+                            </div>
+
+                             <div class="form-group">
+                                <label>Login</label>
+                                <input type="text" name="login"
+                                       class="form-control {{ $errors->has('login') ? "is-invalid":"" }}"
+                                       value="{{ old('login',$user->login) }}" required>
                                 @if($errors->has('login'))
                                     <span class="error invalid-feedback">{{ $errors->first('login') }}</span>
                                 @endif
                             </div>
 
+                             <div class="form-group">
+                                <label>Parol</label>
+                                <input type="password" name="password" id="password-field"
+                                       class="form-control {{ $errors->has('password') ? "is-invalid":"" }}" >
+                                <span toggle="#password-field"
+                                      class="fa fa-fw fa-eye toggle-password field-icon"></span>
+                                @if($errors->has('password'))
+                                    <span class="error invalid-feedback">{{ $errors->first('password') }}</span>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label>Parolni tasdiqlash</label>
+                                <input id="password-confirm" type="password" class="form-control"
+                                       name="password_confirmation"  autocomplete="new-password">
+                                <span toggle="#password-confirm"
+                                      class="fa fa-fw fa-eye toggle-password field-icon"></span>
+                                @if($errors->has('password_confirmation'))
+                                    <span
+                                        class="error invalid-feedback">{{ $errors->first('password_confirmation') }}</span>
+                                @endif
+                                <div id="message"></div>
+                            </div>
+
+
                             <div id="message"></div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-success float-right">Saqlash</button>
-                                <a href="{{ route('sections.index') }}" class="btn btn-danger float-left">Bekor
+                                <a href="{{ route('workers.index') }}" class="btn btn-danger float-left">Bekor
                                     qilish</a>
                             </div>
                         </form>

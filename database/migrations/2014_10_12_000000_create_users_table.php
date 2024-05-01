@@ -15,11 +15,17 @@ return new class extends Migration {
             $table->string('name');
             $table->string('login')->unique();
             $table->string('email')->default('');
-            $table->integer('faculty_id')->nullable();
+            $table->unsignedBigInteger('worker_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('worker_id')
+                ->references('id')
+                ->on('workers')
+                ->onDelete('cascade');
+
         });
     }
 

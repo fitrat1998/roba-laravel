@@ -7,6 +7,7 @@ use App\Models\Worker;
 use App\Http\Requests\StoreWorkerRequest;
 use App\Http\Requests\UpdateWorkerRequest;
 use Database\Seeders\WorkerSeeder;
+use Illuminate\Support\Facades\Hash;
 
 class WorkerController extends Controller
 {
@@ -45,7 +46,7 @@ class WorkerController extends Controller
             'name'          => $validated['name'],
             'login'         => $request->login,
             'password'      => $request->password,
-            'faculty_id'    => $worker->id,
+            'worker_id'    => $worker->id,
         ]);
 
         return redirect()->route('workers.index')->with('success', 'Ishchi muvvafaqiyatli qo`shildi');
@@ -62,17 +63,52 @@ class WorkerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Worker $worker)
+    public function edit($id)
     {
-        //
+        $worker = Worker::find($id);
+        $user = User::where('worker_id',$id)->first();
+
+        return view('admin.workers.edit',compact('worker','user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateWorkerRequest $request, Worker $worker)
+    public function update(UpdateWorkerRequest $request, $id)
     {
-        //
+        $worker = Worker::find($id);
+
+        $validated = $request->validated();
+
+        $worker->update([
+            'fullname' => $validated['name'],
+            'phone'    => $validated['phone']
+        ]);
+
+        $user = User::where('worker_id',$worker->id)->first();
+
+        $this->validate($request, [
+            'name' => ['required', 'string', 'max:255'],
+            'login' => ['required', 'string', 'max:255', 'unique:users,login,' . $user->id],
+            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        if ($request->filled('password')) {
+            $user->update([
+                'name' => $request->input('name'),
+                'login' => $request->input('login'),
+                'password' => Hash::make($request->input('password')),
+                'updated_at' => now()
+            ]);
+        }
+        else {
+            $user->update([
+                'name' => $request->input('name'),
+                'login' => $request->input('login'),
+                'updated_at' => now()
+            ]);
+        }
+        return redirect()->route('workers.index')->with('success', 'Ishchi muvvafaqiyatli tahrirlandi');
     }
 
     /**
@@ -81,7 +117,7 @@ class WorkerController extends Controller
     public function destroy($id)
     {
 //        $worker = User::where('faculty_id',$id)->first();
-        User::where('faculty_id',$id)->delete();
+        User::where('worker_id',$id)->delete();
         Worker::find($id)->delete();
 
         return redirect()->route('workers.index')->with('success', 'Ishchi muvvafaqiyatli o`chirildi');

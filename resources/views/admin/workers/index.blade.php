@@ -43,6 +43,7 @@
                                 <th>ID</th>
                                 <th>Qism nomi</th>
                                 <th>Telefon raqami</th>
+                                <th>Login</th>
                                 <th class="w-25">Amallar</th>
                             </tr>
                             </thead>
@@ -52,6 +53,7 @@
                                     <td>{{ $worker->id }}</td>
                                     <td>{{ $worker->fullname }}</td>
                                     <td>{{ $worker->phone }}</td>
+                                    <td>{{ $worker->user?->login }}</td>
 
 
                                     <td class="text-center">

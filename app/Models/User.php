@@ -47,10 +47,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-//     public function faculty($id)
-//    {
-//        $faculty = Faculty::find($id);
-//
-//        return $faculty->name;
-//    }
+    public function worker()
+    {
+        return $this->belongsTo(Worker::class);
+    }
 }

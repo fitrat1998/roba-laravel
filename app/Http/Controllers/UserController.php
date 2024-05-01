@@ -57,7 +57,7 @@ class UserController extends Controller
             'name' => $request->name,
             'login' => $request->login,
             'email' => 'test@gmail.com',
-            'faculty_id' => 1,
+            'worker_id' => 0,
             'password' => Hash::make($request->get('password')),
         ]);
 
@@ -121,14 +121,14 @@ class UserController extends Controller
                 'name' => $request->input('name'),
                 'login' => $request->input('login'),
                 'password' => Hash::make($request->input('password')),
-                'faculty_id' => 2,
+                'worker_id' => 0,
                 'updated_at' => now()
             ]);
         } else {
             $user->update([
                 'name' => $request->input('name'),
                 'login' => $request->input('login'),
-                'faculty_id' => 2,
+                'worker_id' => 0,
                 'updated_at' => now()
             ]);
         }

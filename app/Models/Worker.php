@@ -13,4 +13,9 @@ class Worker extends Model
         'fullname',
         'phone',
     ];
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'worker_id');
+    }
 }
