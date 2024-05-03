@@ -15,4 +15,9 @@ class Flat extends Model
         'number',
         'surface'
     ];
+
+    public function objects()
+    {
+        return $this->belongsToMany(Objects::class, 'object_table', 'flat_id', 'objects_id');
+    }
 }

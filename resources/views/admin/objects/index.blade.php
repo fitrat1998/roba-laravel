@@ -146,8 +146,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nomi</th>
-{{--                                <th>Qavatlar soni</th>--}}
-{{--                                <th>Xonalar soni</th>--}}
+                                <th>Qavatlar soni</th>
+                                <th>Xonalar soni</th>
 {{--                                <th>Qo'shimcha qismlar</th>--}}
                                 <th class="w-25">Amallar</th>
                             </tr>
@@ -157,7 +157,8 @@
                                 <tr>
                                     <td>{{ $object->id }}</td>
                                     <td>{{ $object->name }}</td>
-
+                                    <td>{{ count($object->floors) - 1 }} - (0 qavat ham mavjud)</td>
+                                    <td>{{ count($object->flats) -   1 }} - (0 qavat ham mavjud)</td>
 
                                     <td class="text-center">
                                         @can('object.delete')

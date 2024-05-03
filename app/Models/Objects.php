@@ -12,4 +12,15 @@ class Objects extends Model
     protected $fillable = [
         'name',
     ];
+
+
+    public function floors()
+    {
+        return $this->hasMany(Floor::class, 'object_id', 'id');
+    }
+
+    public function flats()
+    {
+        return $this->hasMany(Flat::class, 'objects_id', 'id');
+    }
 }

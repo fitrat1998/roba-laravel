@@ -14,4 +14,14 @@ class Floor extends Model
         'number',
         'surface'
     ];
+
+
+
+    public function objects()
+    {
+        return $this->belongsToMany(Objects::class, 'object_floor', 'floor_id', 'object_id');
+    }
+
+
+
 }
