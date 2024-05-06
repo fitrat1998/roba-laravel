@@ -72,6 +72,27 @@
                 <p>Ishchilar</p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('floorsections.index') }}"
+               class="nav-link {{ Request::is('floorsections*') ? 'active' : '' }}">
+                <i class="fa-solid fa-stairs"></i>
+                <p>Qavat qismlari</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('flatsections.index') }}"
+               class="nav-link {{ Request::is('flatsections*') ? 'active' : '' }}">
+                <i class="fa-solid fa-house-chimney-window"></i>
+                <p>Xona qismlari</p>
+            </a>
+        </li>
+            <li class="nav-item">
+                <a href="{{ route('objectsections.index') }}"
+                   class="nav-link {{ Request::is('objectsections*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-square-parking"></i>
+                    <p>Obyekt qismlari</p>
+                </a>
+            </li>
 
 
     </ul>

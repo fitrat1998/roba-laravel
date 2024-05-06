@@ -13,7 +13,7 @@ class FloorSectionController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.floorsections.index');
     }
 
     /**
