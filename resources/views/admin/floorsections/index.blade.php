@@ -28,8 +28,8 @@
 <section class="content">
     <div class="row">
         <div class="col-lg-12 offset-lg-12 col-sm-12">
-            <div class="card card-primary">
-                <div class="card-header">
+            <div class="card ">
+                <div class="card-header title">
                     <h3 class="card-title ">Qo'shish</h3>
                 </div>
                 <!-- /.card-header -->
@@ -37,28 +37,18 @@
 
                     <form action="{{ route('workers.store') }}" method="post">
                         @csrf
-                        <section class="spreadsheet">
-                            <table class="spreadsheet__table"
-                                   id="table-main">
-                                <thead class="spreadsheet__table--headers"
-                                       id="table-headers">
-                                </thead>
-                                <tbody class="spreadsheet__table--body"
-                                       id="table-body2">
-                                </tbody>
-                            </table>
-                        </section>
-                        <div class="form-group">
 
-                            <section class="spreadsheet-controls">
-                                <button class="reset-btn "
-                                        id="reset">Reset Data
-                                </button>
-                            </section>
 
-                            <section class="spreadsheet-controls2">
-                                <button class="submit-btn " type="submit" id="submit">Send-data</button>
-                            </section>
+
+
+                        <div class="form-group mt-2">
+
+                            <button class="btn btn-danger float-left"
+                                    id="reset">Reset Data
+                            </button>
+
+                            <button class="btn btn-success float-right" type="submit" id="submit">Send-data</button>
+
                         </div>
                     </form>
 

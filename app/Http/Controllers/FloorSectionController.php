@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Floor;
 use App\Models\FloorSection;
 use App\Http\Requests\StoreFloorSectionRequest;
 use App\Http\Requests\UpdateFloorSectionRequest;
+use App\Models\Objects;
+use App\Models\Section;
 
 class FloorSectionController extends Controller
 {
@@ -13,7 +16,13 @@ class FloorSectionController extends Controller
      */
     public function index()
     {
-        return view('admin.floorsections.index');
+        $sections = Section::where('parent','floor')->get();
+        $floors = Floor::all();
+        $floors_id = Floor::pluck('object_id')->unique();
+        $object = Objects::whereIn('id',$floors_id)->get();
+
+
+        return view('admin.floorsections.index',compact('floors','object','sections'));
     }
 
     /**

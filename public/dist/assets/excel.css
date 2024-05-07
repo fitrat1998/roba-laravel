@@ -1,196 +1,696 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.cell-input {
-    width: calc(100% - 6px); /* td o'lchami bilan moslashish uchun input o'lchamini sozlash */
     box-sizing: border-box;
-    border: none;
-    outline: none;
-    background-color: transparent;
 }
 
+body {
+    background: #fff;
+    font-family: "Noto Sans", sans-serif;
+    color: #444;
+    font-size: 14px;
+}
 
+aside.context {
+    text-align: center;
+    color: #333;
+    line-height: 1.7;
+}
 
-html {
+aside.context a {
+    text-decoration: none;
+    color: #333;
+    padding: 3px 0;
+    border-bottom: 1px dashed;
+}
 
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+aside.context a:hover {
+    border-bottom: 1px solid;
+}
+
+aside.context .explanation {
+    max-width: 700px;
+    margin: 6em auto 0;
+}
+
+footer {
+    text-align: center;
+    margin: 4em auto;
+    width: 100%;
+}
+
+footer a {
+    text-decoration: none;
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px dashed #333;
+    color: #333;
+    margin: 5px;
+}
+
+footer a:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+footer a .icons {
+    margin-top: 12px;
+    display: inline-block;
+    font-size: 20px;
+}
+
+.main-content {
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: repeat(2, 45px) 115px 60px auto;
+    max-width: 100%;
+}
+
+.main-content > div {
+    max-width: 100%;
 }
 
 .title {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: 1rem;
+    background: #217346;
+    text-align: center;
+    display: grid;
+    place-content: center;
+    color: #fff;
 }
 
-.title__logo {
-  height: 7rem;
-  margin: 1rem;
+.menu-bar {
+    display: grid;
+    grid-template-columns: repeat(10, max-content);
+    padding: 15px;
+    grid-gap: 30px;
+    background: #f3f2f1;
 }
 
-.title__text {
-  margin-left: 2rem;
+.menu-bar div:nth-child(2) span {
+    display: inline-block;
+    position: relative;
+    border-bottom: 5px solid #217346;
+    padding-bottom: 6px;
+    font-weight: 700;
 }
 
-.title__text--name {
-  font-size: 3.6rem;
-  display: inline;
-  font-weight: 600;
+.cell-content {
+    border: 1px solid #e6e6e6;
+    background: #e6e6e6;
+    display: grid;
+    padding: 10px;
+    grid-template-columns: 50px auto;
 }
 
-.title__text--description {
-  font-size: 1.6rem;
-  font-weight: 200;
+.cell-content div {
+    border: 1px solid #cdcdcd;
+    background: #fff;
+    display: flex;
+    align-items: center;
 }
 
-.spreadsheet {
-  margin: 1rem 0.5rem;
+.cell-content div:nth-child(1) {
+    justify-content: center;
+    color: #999;
+    font: italic 700 18px "Merriweather", serif;
+    border-right: none;
 }
 
-table,
-td,
-th,
-tr {
-  border: 0.05rem solid rgba(197, 197, 197, 0.486);
-  font-size: 1.4rem;
-  height: 2.5rem;
-  border-spacing: 0rem;
+.cells {
+    position: relative;
+    display: grid;
+    grid-template-columns: 40px repeat(11, calc((100% - 50px) / 11));
+    grid-template-rows: repeat(21, 25px);
+    grid-gap: 1px;
+    background: #cdcdcd;
+    grid-auto-flow: dense;
+    max-width: 100%;
+    overflow: hidden;
 }
 
-th {
-  font-weight: 500;
+.cells__spacer {
+    background: #e6e6e6;
+    position: relative;
 }
 
-thead {
-  /* background-color: rgb(160, 180, 206); */
-  background-color: #f1f1f1;
-  /* color: #fff; */
+.cells__spacer:after {
+    content: "";
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+    height: 80%;
+    width: 100%;
+    background: linear-gradient(135deg, transparent 30px, #bbb 30px, #bbb 55px, transparent 55px);
 }
 
-td {
-  min-width: 10rem;
-      border: 0.05rem solid rgba(197, 197, 197, 0.486);
-
-  padding: 0.2rem 0.5rem;
-
+.cells__alphabet {
+    background: #e6e6e6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-th {
-  padding: 0.2rem 0.4rem;
-}
-th > .dropdown {
-  float: right;
-}
-
-tbody th {
-  min-width: 5rem;
-  background: #fafafa;
+.cells__number {
+    background: #e6e6e6;
+    grid-column: 1/span 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Dropdown Button */
-.dropbtn {
-  background-color: #e2e2e2d0;
-  color: rgba(0, 0, 0, 0.5);
-  padding: 0rem 0.3rem;
-  /* /* font-size: 1.2rem; */
-  border: none;
-  cursor: pointer;
-  transition: ease 0.4s;
+.cells__input {
+    border: none;
+    padding: 0 6px;
 }
 
-/* Dropdown button on hover & focus */
-.dropbtn:hover,
-.dropbtn:focus {
-  background-color: #d0d0d0;
-  /* visibility: visible; */
+.cells input, .cells button {
+    border: none;
+    background: #fff;
+    padding: 0 6px;
+    font-family: "Noto Sans", sans-serif;
 }
 
-.dropbtn img {
-  height: 2rem;
+.input__explanation {
+    grid-column: 3/span 2;
+    grid-row: 15;
 }
 
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
-  position: relative;
-  display: inline-block;
+.input__see-more {
+    grid-column: 5;
+    grid-row: 15;
+    text-align: left;
+    padding: 6px;
+    background: #fff;
 }
 
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: white;
-  min-width: 16rem;
-  box-shadow: 0 0.5rem 0.8rem 0 rgba(0, 0, 0, 0.1);
-  z-index: 1;
+.input__sm-1, .input__sm-2, .input__sm-3 {
+    text-align: center;
+    padding: 6px;
+    grid-row: 15;
+    background: #fff;
 }
 
-/* Links inside the dropdown */
-.dropdown-content p {
-  color: rgb(133, 132, 132);
-  padding: 0.4rem;
-  font-weight: 400;
-  text-decoration: none;
-  display: block;
+.input__sm-1 {
+    grid-column: 8;
 }
 
-/* Change color of dropdown links on hover */
-.dropdown-content p:hover {
-  background-color: #ddd;
+.input__sm-2 {
+    grid-column: 9;
 }
 
-/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-.show {
-  display: block;
+.input__sm-3 {
+    grid-column: 10;
 }
 
-.column-header-span {
-  cursor: pointer;
+.icon-bar {
+    background: #f3f2f1;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: grid;
+    padding: 10px 15px;
+    grid-template-columns: repeat(6, max-content);
+    grid-template-rows: auto 35px;
+    grid-auto-flow: dense;
 }
 
-.spreadsheet-controls {
-  text-align: left;
-}
-.spreadsheet-controls2 {
-  text-align: right;
-}
-
-.reset-btn {
-  padding: 0.5rem 1.5rem;
-  background-color: #d9534f;
-  color: #fff;
-  border-color: #d43f3a;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 0.3rem;
-  cursor: pointer;
-  transition: ease 0.3s;
+.icon-bar > div {
+    display: grid;
+    grid-template-rows: repeat(2, 30px) 30px;
+    border-right: 1px solid #cdcdcd;
+    grid-gap: 5px;
 }
 
-.reset-btn:hover {
-  color: #fff;
-  background-color: #c9302c;
-  border-color: #ac2925;
+.icon-bar__name {
+    font-size: 12px;
+    text-align: center;
+    align-self: end;
+    margin-bottom: 3px;
+}
+
+.icon-bar .icon-desc {
+    margin-top: 5px;
+    line-height: 1.15;
+    font-size: 13px;
+}
+
+.icon-bar .icon {
+    background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/567707/spriteExcel.png);
+}
+
+.icon-bar__clipboard {
+    grid-template-columns: 50px 30px;
+    padding-right: 10px;
+}
+
+.icon-bar__clipboard .icon-bar__name {
+    grid-column: 1/span 2;
+}
+
+.icon-bar__clipboard .icon-paste {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    grid-row: 1/span 2;
+}
+
+.icon-bar__clipboard .icon-paste .icon {
+    background-position: -30px -60px;
+    height: 45px;
+    width: 100%;
+}
+
+.icon-bar__clipboard .icon-paste span {
+    margin-top: 5px;
+    display: block;
+}
+
+.icon-bar__clipboard .icon-cut {
+    background-position: 0 0;
+}
+
+.icon-bar__clipboard .icon-copy {
+    background-position: -30px 0;
+}
+
+.icon-bar__font {
+    padding: 0 10px;
+    grid-template-columns: repeat(3, 30px) 40px repeat(2, 30px);
+    justify-content: space-around;
+}
+
+.icon-bar__font .icon-bar__name {
+    grid-column: 1/span 5;
+}
+
+.icon-bar__font select {
+    height: 25px;
+}
+
+.icon-bar__font select:nth-child(1) {
+    grid-column: 1/span 4;
+}
+
+.icon-bar__font select:nth-child(1) option {
+    font-family: var(--font);
+}
+
+.icon-bar__font select:nth-child(2) {
+    margin-left: -6px;
+    grid-column: 5/span 2;
+}
+
+.icon-bar__font .icon-bold {
+    background-position: -30px -150px;
+}
+
+.icon-bar__font .icon-italic {
+    background-position: -60px -150px;
+}
+
+.icon-bar__font .icon-underline {
+    background-position: -90px -150px;
+    border-right: 1px solid #cdcdcd;
+    margin-right: -2px;
+}
+
+.icon-bar__font .icon-border {
+    background-position: -60px 0;
+    margin: 0 5px;
+}
+
+.icon-bar__font .icon-fill {
+    background-position: -90px 0;
+    border-left: 1px solid #cdcdcd;
+    margin-left: -2px;
+}
+
+.icon-bar__font .icon-color {
+    background-position: -120px 0;
+}
+
+.icon-bar__alignment {
+    padding: 0 10px;
+    grid-template-columns: repeat(5, 30px) 160px;
+}
+
+.icon-bar__alignment .icon-bar__name {
+    grid-column: 1/span 6;
+}
+
+.icon-bar__alignment .icon-alignt {
+    background-position: -150px 0;
+}
+
+.icon-bar__alignment .icon-alignm {
+    background-position: -180px 0;
+}
+
+.icon-bar__alignment .icon-alignb {
+    background-position: -210px 0;
+}
+
+.icon-bar__alignment .icon-orientation {
+    background-position: -240px 0;
+    border-left: 1px solid #cdcdcd;
+}
+
+.icon-bar__alignment .icon-alignl {
+    background-position: 0 -30px;
+    grid-column: 1;
+}
+
+.icon-bar__alignment .icon-alignc {
+    background-position: -30px -30px;
+}
+
+.icon-bar__alignment .icon-alignr {
+    background-position: -60px -30px;
+}
+
+.icon-bar__alignment .icon-indentinc {
+    background-position: -90px -30px;
+    border-left: 1px solid #cdcdcd;
+}
+
+.icon-bar__alignment .icon-indentdec {
+    background-position: -120px -30px;
+}
+
+.icon-bar__alignment .wrap-text, .icon-bar__alignment .merge-center {
+    grid-column: 6;
+    border-left: 1px solid #cdcdcd;
+    padding-left: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.icon-bar__alignment .wrap-text .icon, .icon-bar__alignment .merge-center .icon {
+    width: 30px;
+    height: 30px;
+}
+
+.icon-bar__alignment .wrap-text span, .icon-bar__alignment .merge-center span {
+    display: block;
+    padding-left: 5px;
+}
+
+.icon-bar__alignment .wrap-text {
+    grid-row: 1;
+}
+
+.icon-bar__alignment .wrap-text .icon {
+    background-position: -270px 0;
+}
+
+.icon-bar__alignment .merge-center .icon {
+    background-position: -150px -30px;
+}
+
+.icon-bar__number {
+    grid-template-columns: repeat(5, 30px);
+    padding: 0 10px;
+}
+
+.icon-bar__number select {
+    grid-column: span 5;
+    height: 25px;
+}
+
+.icon-bar__number .icon-acc {
+    background-position: -180px -30px;
+}
+
+.icon-bar__number .icon-percent {
+    background-position: -210px -30px;
+}
+
+.icon-bar__number .icon-comma {
+    background-position: -240px -30px;
+}
+
+.icon-bar__number .icon-decimalinc {
+    background-position: -270px -30px;
+    border-left: 1px solid #cdcdcd;
+}
+
+.icon-bar__number .icon-decimaldec {
+    background-position: 0 -60px;
+}
+
+.icon-bar__number .icon-bar__name {
+    grid-column: span 5;
+}
+
+.icon-bar__styles {
+    grid-template-columns: 80px 70px 60px;
+    padding: 0 10px;
+    text-align: center;
+}
+
+.icon-bar__styles .icon-bar__name {
+    grid-column: span 3;
+}
+
+.icon-bar__styles .icon {
+    width: 45px;
+    height: 45px;
+    margin: -8px auto 5px;
+}
+
+.icon-bar__styles .conditional .icon {
+    background-position: -75px -60px;
+}
+
+.icon-bar__styles .format-table .icon {
+    background-position: -120px -60px;
+}
+
+.icon-bar__styles .cell-style .icon {
+    background-position: -165px -60px;
+}
+
+.icon-bar__cells {
+    grid-template-columns: repeat(3, 50px);
+    padding: 0 10px;
+    text-align: center;
+}
+
+.icon-bar__cells .icon-bar__name {
+    grid-column: span 3;
+}
+
+.icon-bar__cells .icon {
+    width: 45px;
+    height: 45px;
+    margin: -8px auto 5px;
+}
+
+.icon-bar__cells .cell-insert .icon {
+    background-position: -210px -60px;
+}
+
+.icon-bar__cells .cell-delete .icon {
+    background-position: -255px -60px;
+}
+
+.icon-bar__cells .cell-format .icon {
+    background-position: -30px -105px;
 }
 
 
-.submit-btn {
-  padding: 0.5rem 1.5rem;
-  background-color: Green;
-  color: #fff;
-  border-color: Green;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 0.3rem;
-  cursor: pointer;
-  transition: ease 0.3s;
-}
+/** {*/
+/*  margin: 0;*/
+/*  padding: 0;*/
+/*  box-sizing: border-box;*/
+/*}*/
 
-.submit-btn:hover {
-  color: #fff;
-  background-color: Green;
-  border-color: Green;
-}
+/*.cell-input {*/
+/*    width: calc(100% - 6px); !* td o'lchami bilan moslashish uchun input o'lchamini sozlash *!*/
+/*    box-sizing: border-box;*/
+/*    border: none;*/
+/*    outline: none;*/
+/*    background-color: transparent;*/
+/*}*/
+
+
+/*html {*/
+
+/*  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;*/
+/*}*/
+
+/*.title {*/
+/*  display: flex;*/
+/*  flex-direction: row;*/
+/*  align-items: center;*/
+/*  margin: 1rem;*/
+/*}*/
+
+/*.title__logo {*/
+/*  height: 7rem;*/
+/*  margin: 1rem;*/
+/*}*/
+
+/*.title__text {*/
+/*  margin-left: 2rem;*/
+/*}*/
+
+/*.title__text--name {*/
+/*  font-size: 3.6rem;*/
+/*  display: inline;*/
+/*  font-weight: 600;*/
+/*}*/
+
+/*.title__text--description {*/
+/*  font-size: 1.6rem;*/
+/*  font-weight: 200;*/
+/*}*/
+
+/*.spreadsheet {*/
+/*  margin: 1rem 0.5rem;*/
+/*}*/
+
+/*table,*/
+/*td,*/
+/*th,*/
+/*tr {*/
+/*  border: 0.05rem solid rgba(197, 197, 197, 0.486);*/
+/*  font-size: 1.4rem;*/
+/*  height: 2.5rem;*/
+/*  border-spacing: 0rem;*/
+/*}*/
+
+/*th {*/
+/*  font-weight: 500;*/
+/*}*/
+
+/*thead {*/
+/*  !* background-color: rgb(160, 180, 206); *!*/
+/*  background-color: #f1f1f1;*/
+/*  !* color: #fff; *!*/
+/*}*/
+
+/*td {*/
+/*  min-width: 10rem;*/
+/*      border: 0.05rem solid rgba(197, 197, 197, 0.486);*/
+
+/*  padding: 0.2rem 0.5rem;*/
+
+/*}*/
+
+/*th {*/
+/*  padding: 0.2rem 0.4rem;*/
+/*}*/
+/*th > .dropdown {*/
+/*  float: right;*/
+/*}*/
+
+/*tbody th {*/
+/*  min-width: 5rem;*/
+/*  background: #fafafa;*/
+/*}*/
+
+/*!* Dropdown Button *!*/
+/*.dropbtn {*/
+/*  background-color: #e2e2e2d0;*/
+/*  color: rgba(0, 0, 0, 0.5);*/
+/*  padding: 0rem 0.3rem;*/
+/*  !* !* font-size: 1.2rem; *!*/
+/*  border: none;*/
+/*  cursor: pointer;*/
+/*  transition: ease 0.4s;*/
+/*}*/
+
+/*!* Dropdown button on hover & focus *!*/
+/*.dropbtn:hover,*/
+/*.dropbtn:focus {*/
+/*  background-color: #d0d0d0;*/
+/*  !* visibility: visible; *!*/
+/*}*/
+
+/*.dropbtn img {*/
+/*  height: 2rem;*/
+/*}*/
+
+/*!* The container <div> - needed to position the dropdown content *!*/
+/*.dropdown {*/
+/*  position: relative;*/
+/*  display: inline-block;*/
+/*}*/
+
+/*!* Dropdown Content (Hidden by Default) *!*/
+/*.dropdown-content {*/
+/*  display: none;*/
+/*  position: absolute;*/
+/*  background-color: white;*/
+/*  min-width: 16rem;*/
+/*  box-shadow: 0 0.5rem 0.8rem 0 rgba(0, 0, 0, 0.1);*/
+/*  z-index: 1;*/
+/*}*/
+
+/*!* Links inside the dropdown *!*/
+/*.dropdown-content p {*/
+/*  color: rgb(133, 132, 132);*/
+/*  padding: 0.4rem;*/
+/*  font-weight: 400;*/
+/*  text-decoration: none;*/
+/*  display: block;*/
+/*}*/
+
+/*!* Change color of dropdown links on hover *!*/
+/*.dropdown-content p:hover {*/
+/*  background-color: #ddd;*/
+/*}*/
+
+/*!* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) *!*/
+/*.show {*/
+/*  display: block;*/
+/*}*/
+
+/*.column-header-span {*/
+/*  cursor: pointer;*/
+/*}*/
+
+/*.spreadsheet-controls {*/
+/*  text-align: left;*/
+/*}*/
+/*.spreadsheet-controls2 {*/
+/*  text-align: right;*/
+/*}*/
+
+/*.reset-btn {*/
+/*  padding: 0.5rem 1.5rem;*/
+/*  background-color: #d9534f;*/
+/*  color: #fff;*/
+/*  border-color: #d43f3a;*/
+/*  border-width: 1px;*/
+/*  border-style: solid;*/
+/*  border-radius: 0.3rem;*/
+/*  cursor: pointer;*/
+/*  transition: ease 0.3s;*/
+/*}*/
+
+/*.reset-btn:hover {*/
+/*  color: #fff;*/
+/*  background-color: #c9302c;*/
+/*  border-color: #ac2925;*/
+/*}*/
+
+
+/*.submit-btn {*/
+/*  padding: 0.5rem 1.5rem;*/
+/*  background-color: Green;*/
+/*  color: #fff;*/
+/*  border-color: Green;*/
+/*  border-width: 1px;*/
+/*  border-style: solid;*/
+/*  border-radius: 0.3rem;*/
+/*  cursor: pointer;*/
+/*  transition: ease 0.3s;*/
+/*}*/
+
+/*.submit-btn:hover {*/
+/*  color: #fff;*/
+/*  background-color: Green;*/
+/*  border-color: Green;*/
+/*}*/
