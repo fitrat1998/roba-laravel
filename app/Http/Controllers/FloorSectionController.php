@@ -8,6 +8,7 @@ use App\Http\Requests\StoreFloorSectionRequest;
 use App\Http\Requests\UpdateFloorSectionRequest;
 use App\Models\Objects;
 use App\Models\Section;
+use Illuminate\Http\Client\Request;
 
 class FloorSectionController extends Controller
 {
@@ -16,13 +17,13 @@ class FloorSectionController extends Controller
      */
     public function index()
     {
-        $sections = Section::where('parent','floor')->get();
+        $sections = Section::where('parent', 'floor')->get();
         $floors = Floor::all();
         $floors_id = Floor::pluck('object_id')->unique();
-        $object = Objects::whereIn('id',$floors_id)->get();
+        $object = Objects::whereIn('id', $floors_id)->get();
 
 
-        return view('admin.floorsections.index',compact('floors','object','sections'));
+        return view('admin.floorsections.index', compact('floors', 'object', 'sections'));
     }
 
     /**
@@ -44,9 +45,11 @@ class FloorSectionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(FloorSection $floorSection)
+    public function show(Request $request)
     {
-        //
+        $csvData = $request->input('floors');
+
+//        return response()->json($csvData);
     }
 
     /**

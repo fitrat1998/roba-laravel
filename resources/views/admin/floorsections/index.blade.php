@@ -29,7 +29,7 @@
     <div class="row">
         <div class="col-lg-12 offset-lg-12 col-sm-12">
             <div class="card ">
-                <div class="card-header title">
+                <div class="card-header bg- success">
                     <h3 class="card-title ">Qo'shish</h3>
                 </div>
                 <!-- /.card-header -->
@@ -37,17 +37,15 @@
 
                     <form action="{{ route('workers.store') }}" method="post">
                         @csrf
-
-
-
-
+                        <div>Cell: <span id="cell-status"></span></div>
+                        <div id="spreadsheet-container"></div>
                         <div class="form-group mt-2">
 
                             <button class="btn btn-danger float-left"
                                     id="reset">Reset Data
                             </button>
 
-                            <button class="btn btn-success float-right" type="submit" id="submit">Send-data</button>
+                            <button class="btn btn-success float-right" type="submit" id="export-btn">Send-data</button>
 
                         </div>
                     </form>
