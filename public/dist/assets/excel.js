@@ -1,36 +1,23 @@
 const spreadSheetContainer = document.querySelector("#spreadsheet-container")
 const exportBtn = document.querySelector("#export-btn")
-const ROWS = 10
-const COLS = 15
+const ROWS = document.querySelector("#floors_count").value;
+const COLS = ROWS
 const spreadsheet = []
-const alphabets = [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-    "K",
-    "L",
-    "M",
-    "N",
-    "O",
-    "P",
-    "Q",
-    "R",
-    "S",
-    "T",
-    "U",
-    "V",
-    "W",
-    "X",
-    "Y",
-    "Z",
-]
+const order = []
+
+const section = document.querySelectorAll('.sections');
+const number = document.querySelectorAll('.fn');
+
+const alphabets = [];
+const floor_number = [];
+
+section.forEach(input => {
+    alphabets.push(input.value.toString());
+});
+
+number.forEach(input => {
+    floor_number.push(input.value);
+});
 
 class Cell {
     constructor(isHeader, disabled, data, row, column, rowName, columnName, active = false) {
@@ -46,32 +33,25 @@ class Cell {
 }
 
 exportBtn.onclick = function (e) {
-    let csv = ""
+    e.preventDefault();
+    let csv = "";
+    let num = '';
     for (let i = 0; i < spreadsheet.length; i++) {
         csv +=
             spreadsheet[i]
                 .filter((item) => !item.isHeader)
                 .map((item) => item.data)
-                .join(",") + "\r\n"
+                .join("&") + "$"
     }
 
-    const csvObj = new Blob([csv])
-    const csvUrl = URL.createObjectURL(csvObj)
-    console.log(csv)
-    event.preventDefault();
-
-    // const a = document.createElement("a")
-    // a.href = csvUrl
-    // a.download = "Exported Spreadsheet.csv"
-    // a.click()
-
     $(document).ready(function () {
-
+        console.log(csv)
         $.ajax({
             type: 'GET',
-            url: '/floorsections/',
+            url: '/floor-sections',
             data: {
-                floors:csv
+                floors:csv,
+                floor_numbers:floor_number,
             },
             success:function(response){
                 console.log(response)
@@ -81,10 +61,15 @@ exportBtn.onclick = function (e) {
             }
         });
 
-
-
-
     });
+
+    // const csvObj = new Blob([csv])
+    // const csvUrl = URL.createObjectURL(csvObj)
+    // const a = document.createElement("a")
+    // a.href = csvUrl
+    // a.download = "Exported Spreadsheet.csv"
+    // a.click()
+
 }
 
 initSpreadsheet()
@@ -92,12 +77,13 @@ initSpreadsheet()
 function initSpreadsheet() {
     for (let i = 0; i < COLS; i++) {
         let spreadsheetRow = []
+        let spreadsheetorder = []
         for (let j = 0; j < COLS; j++) {
             let cellData = ""
             let isHeader = false
             let disabled = false
             if (j === 0) {
-                cellData = i
+                cellData = floor_number[i]
                 isHeader = true
                 disabled = true
             }
@@ -115,8 +101,12 @@ function initSpreadsheet() {
             const columnName = alphabets[j - 1]
             const cell = new Cell(isHeader, disabled, cellData, i, j, rowName, columnName, false)
             spreadsheetRow.push(cell)
+            spreadsheetorder.push(floor_number[i])
+
         }
         spreadsheet.push(spreadsheetRow)
+        order.push(floor_number[i])
+
     }
     console.log("spreadsheet", spreadsheet)
     drawSheet()

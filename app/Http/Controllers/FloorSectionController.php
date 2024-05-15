@@ -8,7 +8,8 @@ use App\Http\Requests\StoreFloorSectionRequest;
 use App\Http\Requests\UpdateFloorSectionRequest;
 use App\Models\Objects;
 use App\Models\Section;
-use Illuminate\Http\Client\Request;
+use Illuminate\Http\Request;
+
 
 class FloorSectionController extends Controller
 {
@@ -21,9 +22,11 @@ class FloorSectionController extends Controller
         $floors = Floor::all();
         $floors_id = Floor::pluck('object_id')->unique();
         $object = Objects::whereIn('id', $floors_id)->get();
+        $count_f = count($floors);
+        $floor_number = Floor::pluck('number');
+//        dd($floor_number);
 
-
-        return view('admin.floorsections.index', compact('floors', 'object', 'sections'));
+        return view('admin.floorsections.index', compact('floors', 'object', 'sections','count_f','floor_number'));
     }
 
     /**
@@ -45,11 +48,19 @@ class FloorSectionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request)
+    public function excel(Request $request)
     {
-        $csvData = $request->input('floors');
+        $floors = $request->get('floors');
+        $floor_numbers = $request->get('floor_numbers');
 
-//        return response()->json($csvData);
+        $floors_row = explode("$",$floors);
+
+        $floors_col = [];
+
+        foreach ($floors_row as $f) {
+            $floors_col[] = explode('&',$f);
+        }
+        return response()->json($floor_numbers);
     }
 
     /**

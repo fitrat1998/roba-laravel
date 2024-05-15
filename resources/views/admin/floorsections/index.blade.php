@@ -30,25 +30,41 @@
         <div class="col-lg-12 offset-lg-12 col-sm-12">
             <div class="card ">
                 <div class="card-header bg- success">
-                    <h3 class="card-title ">Qo'shish</h3>
+                    <h3 class="btn btn-success" onclick="myFunction()">Qo'shish</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
 
-                    <form action="{{ route('workers.store') }}" method="post">
-                        @csrf
-                        <div>Cell: <span id="cell-status"></span></div>
-                        <div id="spreadsheet-container"></div>
-                        <div class="form-group mt-2">
+                    @foreach($sections as $section)
+                        <input type="hidden" class="sections" value="{{ $section->name }}">
+                    @endforeach
 
-                            <button class="btn btn-danger float-left"
-                                    id="reset">Reset Data
-                            </button>
+                     @foreach($floor_number as $fn)
+                        <input type="hidden" class="fn" value="{{ $fn }}">
+                    @endforeach
 
-                            <button class="btn btn-success float-right" type="submit" id="export-btn">Send-data</button>
+                    <div id="card">
+                        <input type="hidden" value="{{ $count_f }}" id="floors_count">
+                        <form action="{{ route('workers.store') }}" method="post">
+                            @csrf
+                            <div>Cell: <span id="cell-status"></span></div>
+                            <div id="spreadsheet-container"></div>
+                            <div class="form-group mt-2">
 
-                        </div>
-                    </form>
+                                <button class="btn btn-danger float-left"
+                                        id="reset">Reset Data
+                                </button>
+
+                                <button class="btn btn-success float-right" type="submit" id="export-btn">Send-data
+                                </button>
+
+                            </div>
+                        </form>
+                    </div>
+
+                    <div>
+                        dnsiaohdio
+                    </div>
 
                 </div>
             </div>

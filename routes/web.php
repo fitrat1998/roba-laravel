@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('objects',ObjectsController::class);
     Route::resource('objectsections',ObjectSectionController::class);
     Route::resource('floorsections',FloorSectionController::class);
+    Route::get('/floor-sections',[FloorSectionController::class,'excel']);
     Route::resource('flatsections',FlatSectionController::class);
     Route::resource('sections',SectionController::class);
     Route::resource('workers',WorkerController::class);
