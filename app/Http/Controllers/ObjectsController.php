@@ -62,78 +62,70 @@ class ObjectsController extends Controller
         $parsedfloors = explode('/', $request->get('floors'));
         $parsedflats = explode('/', $request->get('rooms'));
 
-
         $floors_end = $parsedfloors[1] ?? 0;
         $floors_start = $parsedfloors[0] ?? 0;
-        dd($parsedfloors);
 
-        if($floors_end && $floors_start){
+        $floors_s = $floors_end - $floors_start + 1;
 
-             $floors_s = $floors_end - $floors_start + 1;
-        }
-
-
-
-// Check if $parsedflats[1] is numeric before proceeding
-        if (isset($parsedflats[1]) && is_numeric($parsedflats[1])) {
-            $floors_room = ($parsedflats[1] ?? 0) / $floors_s;
-        } else {
-            // Handle the case where $parsedflats[1] is not numeric
-            // For example, set a default value or return an error message
-            return redirect()->back()->with('danger', 'Invalid input for rooms.');
-        }
-
+        $floors_room = ($parsedflats[1] ?? 0) / $floors_s;
         $c = 0;
 
         for ($i = $floors_start; $i <= $floors_end; $i++) {
-            $existsobjects = ''; // Assuming this is defined elsewhere
+            if (($existsobjects)) {
+                $floor = Floor::where('objects_id', $existsobjects->id)
+                    ->where('number', $i)
+                    ->first();
+            }
 
-    // Check if floor already exists for the object
-    $floor = Floor::where('objects_id', $existsobjects->id)
-        ->where('number', $i)
-        ->first();
-
-    if (!$floor) {
-        // Create floor if it doesn't exist
-        $floor = Floor::create([
-            'objects_id' => $objects->id ?? $existsobjects->id,
-            'number' => $i,
-        ]);
-
-        // Attach sections to the floor
-        foreach ($request->floor_sec as $ob) {
-            DB::table('floor_has_section')->updateOrInsert([
-                'floors_id' => $floor->id,
-                'sections_id' => $ob
-            ]);
-        }
-
-        // Calculate number of flats for this floor
-        $flats_start = ($i - 1) * $floors_room;
-        $flats_end = $i * $floors_room;
-
-        // Create flats for the current floor
-        for ($j = $flats_start; $j < $flats_end; $j++) {
-            Flat::create([
-                'object_id' => $objects->id ?? $existsobjects->id,
-                'floor_id' => $floor->id,
-                'number' => $j + 1,
-                'surface' => $i // Adjust as per your requirements
-            ]);
-
-            // Attach sections to the flat
-            foreach ($request->flat_sec as $ob) {
-                DB::table('flat_has_section')->updateOrInsert([
-                    'flats_id' => $flat->id,
-                    'sections_id' => $ob
+            $floor = [];
+            if (!$floor) {
+//                dd($existsobjects->id);
+                $floor = Floor::create([
+                    'objects_id' => $objects->id ?? $existsobjects->id,
+                    'number' => $i,
+//                    'surface' => 0,
                 ]);
+
+                foreach ($request->floor_sec as $k => $ob) {
+                    $sec_floor = DB::table('floor_has_section')
+                        ->where('floors_id', $floor->id)
+                        ->where('sections_id', $ob)
+                        ->first();
+                    if (!$sec_floor) {
+                        DB::table('floor_has_section')->insert([
+                            'floors_id' => $floor->id,
+                            'sections_id' => $ob
+                        ]);
+                    }
+                }
+
+                for ($j = ($i - 1) * $floors_room; $j < abs($i) * $floors_room; $j++) {
+                    $flat = Flat::create([
+                        'object_id' => $objects->id ?? $existsobjects->id,
+                        'floor_id' => $floor->id,
+                        'number' => $j + 1,
+                        'surface' => $i
+                    ]);
+
+                    foreach ($request->flat_sec as $k => $ob) {
+                        $sec_flat = DB::table('flat_has_section')
+                            ->where('flats_id', $flat->id)
+                            ->where('sections_id', $ob)
+                            ->first();
+                        if (!$sec_flat) {
+                            DB::table('flat_has_section')->insert([
+                                'flats_id' => $flat->id,
+                                'sections_id' => $ob
+                            ]);
+                        }
+                    }
+                }
+                $c++;
+
+            } else {
+                return redirect()->back()->with('danger', 'Malumotlar allaqachon mavjud');
             }
         }
-        $c++;
-    } else {
-        return redirect()->back()->with('danger', 'Floor already exists for this object.');
-    }
-}
 //        return  $c;
         return redirect()->route('objects.index')->with('success', 'Obyekt muvaffaqiyatli qo`shildi');
 
