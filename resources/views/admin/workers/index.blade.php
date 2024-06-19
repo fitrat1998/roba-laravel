@@ -41,7 +41,7 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Qism nomi</th>
+                                <th><FISH></FISH></th>
                                 <th>Telefon raqami</th>
                                 <th>Login</th>
                                 <th class="w-25">Amallar</th>

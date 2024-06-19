@@ -49,7 +49,10 @@ class WorkerController extends Controller
             'worker_id'    => $worker->id,
         ]);
 
-        return redirect()->route('workers.index')->with('success', 'Ishchi muvvafaqiyatli qo`shildi');
+        if($user){
+         return redirect()->route('workers.index')->with('success', 'Ishchi muvvafaqiyatli qo`shildi');
+        }
+
     }
 
     /**

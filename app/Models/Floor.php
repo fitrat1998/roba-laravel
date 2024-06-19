@@ -10,7 +10,7 @@ class Floor extends Model
     use HasFactory;
 
     protected $fillable = [
-        'object_id',
+        'objects_id',
         'number',
         'surface'
     ];

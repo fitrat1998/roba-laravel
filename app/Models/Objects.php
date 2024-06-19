@@ -16,11 +16,11 @@ class Objects extends Model
 
     public function floors()
     {
-        return $this->hasMany(Floor::class, 'object_id', 'id');
+        return $this->hasMany(Floor::class, 'objects_id', 'id');
     }
 
     public function flats()
     {
-        return $this->hasMany(Flat::class, 'objects_id', 'id');
+        return $this->hasMany(Flat::class, 'object_id', 'id');
     }
 }

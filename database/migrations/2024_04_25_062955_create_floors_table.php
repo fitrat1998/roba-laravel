@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->bigInteger('objects_id')->unsigned();
             $table->string('number')->nullable();
-            $table->string('surface');
+            $table->string('surface')->nullable();
             $table->timestamps();
             $table->foreign('objects_id')->references('id')->on('objects')->onDelete('cascade');
         });

@@ -10,15 +10,16 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('flats', function (Blueprint $table) {
+        Schema::create('floor_has_surface', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('object_id')->unsigned();
-            $table->bigInteger('floor_id')->unsigned();
-            $table->string('number')->nullable();
-            $table->string('surface')->nullable();
+            $table->unsignedBigInteger('floor_id');
+            $table->unsignedBigInteger('section_id');
+            $table->integer('surface');
+            $table->string('worker')->nullable();
             $table->timestamps();
-            $table->foreign('object_id')->references('id')->on('objects')->onDelete('cascade');
             $table->foreign('floor_id')->references('id')->on('floors')->onDelete('cascade');
+            $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
+
         });
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('flats');
+        Schema::dropIfExists('floor_has_surface');
     }
 };
